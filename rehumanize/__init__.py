@@ -1,1 +1,1 @@
-from .rehumanize import five
+from .rehumanize import rehumanize

@@ -1,2 +1,2 @@
-def five() -> int:
-  return 5
+def rehumanize(num: int) -> str:
+  return "flooby"

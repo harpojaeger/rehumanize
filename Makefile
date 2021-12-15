@@ -1,5 +1,2 @@
-init:
-	pip install -r requirements.txt
-
 test:
-	pytest tests
+	python3 -m unittest tests/test_rehumanize.py
