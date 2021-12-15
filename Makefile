@@ -1,2 +1,5 @@
+init:
+	pip install -r requirements.txt
+
 test:
-	python3 -m unittest tests/test_**.py
+	pytest tests
