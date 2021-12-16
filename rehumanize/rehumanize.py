@@ -2,7 +2,7 @@ LT_TWENTY = ["", "one", "two", "three", "four", "five", "six", "seven", "eight",
              "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 TENS = ["twenty", "thirty", "forty", "fifty",
         "sixty", "seventy", "eighty", "ninety"]
-THOUSANDS = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion",
+THOUSANDS = ["thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion",
              "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "quattuordecillion", "quindecillion", "sexdecillion", "septendecillion", "octodecillion", "novemdecillion", "vigintillion"]
 
 
@@ -10,62 +10,58 @@ def rehumanize(num: int) -> str:
     if num == 0:
         return "zero"
     digits: list[int] = [int(digit) for digit in str(num)]
-    english: str = ""
-    # In this outer loop, we will iterate over three-digit chunks of the input.
-    # We call each of these a "thousands_group"; its English prefix is
-    # independent of how many thousands it represents and can therefore be
-    # computed independently.
-    thousands_groups: int = 0
+    written_form: str = ""
+    # In this outer loop, we will iterate over the input in three-digit groups.
+    # Each group's English prefix ("one hundred and fifty" in "one hundred and
+    # fifty million", for example) is independent of its place value; it is
+    #  therefore computed independently before having the name appended.
+    num_groups: int = 0
     while len(digits) > 0:
-        thousands_group: int = 0
+        group_value: int = 0
 
         # This inner loop takes the place of a modulo 1000 operation. For very
-        # large numbers, modular arithmetic may be greater than O(n). It appears
-        # to also yield incorrect results in Python.
+        # large numbers, modular arithmetic may have time complexity greater
+        # than O(n), and also appears to produce incorrect results.
         tens: int = 0
         while len(digits) > 0 and tens < 3:
-            thousands_group += ((10**tens) *
-                                digits.pop(len(digits) - 1))
+            group_value += ((10**tens) * digits.pop())
             tens += 1
 
-        thousands_group_english: str = ""
-        if thousands_group > 0:
-            # Prepend a separator to the written form of this thousands group
-            # _only_ if if another group will end up following it.
+        group_written_form: str = ""
+        if group_value > 0:
+            # Prepend a separator to the written form of this group _only_ if
+            # another group will end up following it.
             if len(digits) > 0:
-                thousands_group_english = ", " if thousands_group > 100 else " and "
+                group_written_form = ", " if group_value > 100 else " and "
 
-            thousands_group_english += process_three_digit_number(
-                thousands_group)
+            group_written_form += process_three_digit_number(group_value)
 
-            if thousands_groups > 0:
-                thousands_group_english += " "
+            if num_groups > 0:
+                group_written_form += " " + THOUSANDS[num_groups-1]
 
-            thousands_group_english += THOUSANDS[thousands_groups]
+        written_form = group_written_form + written_form
 
-        english = thousands_group_english + english
+        num_groups += 1
 
-        thousands_groups += 1
-
-    return english
+    return written_form
 
 
 def process_three_digit_number(num: int) -> str:
     two_digits: int = num % 100
-    english = process_two_digit_number(two_digits)
+    written_form = process_two_digit_number(two_digits)
     quotient = num - two_digits
 
     if quotient > 0:
         # 100 is written "one hundred", not "one hundred and zero"
         if two_digits == 0:
-            english = ""
+            written_form = ""
         else:
-            english = f" and {english}"
+            written_form = f" and {written_form}"
 
         hundreds_place: int = int(quotient/100)
-        english: str = f"{LT_TWENTY[hundreds_place]} hundred{english}"
+        written_form: str = f"{LT_TWENTY[hundreds_place]} hundred{written_form}"
 
-    return english
+    return written_form
 
 
 def process_two_digit_number(num: int) -> str:
@@ -75,8 +71,8 @@ def process_two_digit_number(num: int) -> str:
     ones_place: int = num % 10
     tens_place: int = int((num - ones_place)/10)
 
-    english: str = TENS[tens_place-2]
+    written_form: str = TENS[tens_place-2]
     if ones_place > 0:
-        english = f"{english}-{LT_TWENTY[ones_place]}"
+        written_form += "-" + LT_TWENTY[ones_place]
 
-    return english
+    return written_form
