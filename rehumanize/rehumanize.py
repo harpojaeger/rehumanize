@@ -2,7 +2,8 @@ LT_TWENTY = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eig
              "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 TENS = ["twenty", "thirty", "forty", "fifty",
         "sixty", "seventy", "eighty", "ninety"]
-THOUSANDS = ["", "thousand", "million", "billion"]
+THOUSANDS = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion",
+             "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "quattuordecillion", "quindecillion", "sexdecillion", "septendecillion", "octodecillion", "novemdecillion", "vigintillion"]
 
 
 def rehumanize(num: int) -> str:
