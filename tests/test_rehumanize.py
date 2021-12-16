@@ -49,7 +49,8 @@ class RehumanizeTest(unittest.TestCase):
         (42000, "forty-two thousand"),
         (42420, "forty-two thousand, four hundred and twenty"),
         (169420, "one hundred and sixty-nine thousand, four hundred and twenty"),
-        (5169420, "five million, one hundred and sixty-nine thousand, four hundred and twenty")
+        (5169420, "five million, one hundred and sixty-nine thousand, four hundred and twenty"),
+        (5000420, "five million, four hundred and twenty")
     ])
     def test_gt_one_thousand(self, num, string):
         self.assertEqual(rehumanize(num), string)

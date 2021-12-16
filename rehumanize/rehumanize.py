@@ -7,9 +7,9 @@ THOUSANDS = ["", "thousand", "million", "billion", "trillion", "quadrillion", "q
 
 
 def rehumanize(num: int) -> str:
-    english: str = ""
     if num == 0:
         return "zero"
+    english: str = ""
     # In this outer loop, we will iterate over three-digit chunks of the input.
     # We call each of these a "thousands_group"; its English prefix is
     # independent of how many thousands it represents and can therefore be
@@ -28,10 +28,10 @@ def rehumanize(num: int) -> str:
             thousands_group_english += process_three_digit_number(
                 thousands_group)
 
-        if thousands_groups > 0:
-            thousands_group_english += " "
+            if thousands_groups > 0:
+                thousands_group_english += " "
 
-        thousands_group_english += THOUSANDS[thousands_groups]
+            thousands_group_english += THOUSANDS[thousands_groups]
 
         english = thousands_group_english + english
 
