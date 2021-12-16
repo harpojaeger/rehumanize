@@ -21,7 +21,7 @@ def rehumanize(num: int) -> str:
         remaining = int((remaining - thousands_group) / 1000)
 
         thousands_group_english: str = ""
-        if thousands_group > 0 or remaining == 0:
+        if thousands_group > 0:
             if remaining > 0:
                 thousands_group_english = ", " if thousands_group > 100 else " and "
 
