@@ -18,6 +18,8 @@ class RehumanizeTest(unittest.TestCase):
         (10, "ten"),
         (12, "twelve"),
         (20, "twenty"),
+        (42, "forty-two"),
+        (87, "eighty-seven"),
         (95, "ninety-five")])
     def test_s(self, num, string):
         self.assertEqual(rehumanize(num), string)
