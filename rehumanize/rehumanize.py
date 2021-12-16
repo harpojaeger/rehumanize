@@ -49,9 +49,7 @@ def rehumanize(num: int) -> str:
 def process_three_digit_number(num: int) -> str:
     two_digits: int = num % 100
     written_form = process_two_digit_number(two_digits)
-    quotient = num - two_digits
-
-    if quotient == 0:
+    if num < 100:
         return written_form
 
     # 100 is written "one hundred", not "one hundred and zero"
@@ -60,7 +58,7 @@ def process_three_digit_number(num: int) -> str:
     else:
         written_form = f" and {written_form}"
 
-    hundreds_place: int = int(quotient/100)
+    hundreds_place: int = int((num - two_digits)/100)
     written_form: str = f"{LT_TWENTY[hundreds_place]} hundred{written_form}"
 
     return written_form
