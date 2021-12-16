@@ -11,8 +11,14 @@ def rehumanize(num: int) -> str:
     quotient = num - two_digits
 
     if quotient > 0:
+        # 100 is written "one hundred", not "one hundred and zero"
+        if two_digits == 0:
+            english = ""
+        else:
+            english = f" and {english}"
+
         hundreds_place: int = int(quotient/100)
-        english: str = f"{LT_TWENTY[hundreds_place]} hundred and {english}"
+        english: str = f"{LT_TWENTY[hundreds_place]} hundred{english}"
 
     return english
 

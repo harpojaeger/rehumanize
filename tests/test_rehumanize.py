@@ -34,7 +34,9 @@ class RehumanizeTest(unittest.TestCase):
         (100, "one hundred"),
         (109, "one hundred and nine"),
         (118, "one hundred and eighteen"),
-        (177, "one hundred and seventy-seven")
+        (177, "one hundred and seventy-seven"),
+        (700, "seven hundred"),
+        (999, "nine hundred and ninety-nine")
     ])
     def test_three_digits(self, num, string):
         self.assertEqual(rehumanize(num), string)
