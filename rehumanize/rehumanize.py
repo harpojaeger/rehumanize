@@ -19,8 +19,6 @@ def rehumanize(num: int) -> str:
         while len(digits) > 0:
             thousands_group += ((10**tens) *
                                 digits.pop(len(digits) - 1))
-            print(
-                f"inner loop: reversed_digits is {digits} and tg is {thousands_group}")
             tens += 1
         english = process_three_digit_number(thousands_group)
 

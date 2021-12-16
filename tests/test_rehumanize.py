@@ -41,6 +41,17 @@ class RehumanizeTest(unittest.TestCase):
     def test_three_digits(self, num, string):
         self.assertEqual(rehumanize(num), string)
 
+    @parameterized.expand([
+        (1000, "one thousand"),
+        (1001, "one thousand and one"),
+        (1512, "one thousand, five hundred and twelve"),
+        (42000, "forty-two thousand"),
+        (42420, "forty-two thousand, four hundred and twenty"),
+        (169420, "one hundred and sixty-nine thousand, four hundred and twenty")
+    ])
+    def test_gt_one_thousand(self, num, string):
+        self.assertEqual(rehumanize(num), string)
+
 
 if __name__ == '__main__':
     unittest.main()
