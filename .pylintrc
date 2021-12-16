@@ -1,1 +1,2 @@
-indent-string='  '
+[FORMAT]
+max-line-length=80
