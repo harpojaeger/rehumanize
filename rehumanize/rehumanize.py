@@ -23,7 +23,7 @@ def rehumanize(num: int) -> str:
             tens += 1
 
         thousands_group_english: str = ""
-        if thousands_group > 0:
+        if thousands_group > 0 or len(digits) == 0:
             if len(digits) > 0:
                 thousands_group_english = ", " if thousands_group > 100 else " and "
 
