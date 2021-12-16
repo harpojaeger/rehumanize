@@ -14,14 +14,29 @@ sys.path.insert(0, os.path.abspath(
 class RehumanizeTest(unittest.TestCase):
 
     @parameterized.expand([
+        (0, "zero"),
         (2, "two"),
+        (9, "nine")])
+    def test_one_digit(self, num, string):
+        self.assertEqual(rehumanize(num), string)
+
+    @parameterized.expand([
         (10, "ten"),
         (12, "twelve"),
         (20, "twenty"),
         (42, "forty-two"),
         (87, "eighty-seven"),
         (95, "ninety-five")])
-    def test_s(self, num, string):
+    def test_two_digits(self, num, string):
+        self.assertEqual(rehumanize(num), string)
+
+    @parameterized.expand([
+        (100, "one hundred"),
+        (109, "one hundred and nine"),
+        (118, "one hundred and eighteen"),
+        (177, "one hundred and seventy-seven")
+    ])
+    def test_three_digits(self, num, string):
         self.assertEqual(rehumanize(num), string)
 
 
