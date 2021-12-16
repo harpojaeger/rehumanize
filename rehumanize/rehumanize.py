@@ -25,7 +25,7 @@ def rehumanize(num: int) -> str:
         thousands_group_english: str = ""
         if thousands_group > 0:
             if len(digits) > 0:
-                thousands_group_english = ", " if len(digits) > 2 else " and "
+                thousands_group_english = ", " if thousands_group > 100 else " and "
 
             thousands_group_english += process_three_digit_number(
                 thousands_group)

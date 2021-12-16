@@ -44,6 +44,7 @@ class RehumanizeTest(unittest.TestCase):
     @parameterized.expand([
         (1000, "one thousand"),
         (1001, "one thousand and one"),
+        (1069, "one thousand and sixty-nine"),
         (1512, "one thousand, five hundred and twelve"),
         (42000, "forty-two thousand"),
         (42420, "forty-two thousand, four hundred and twenty"),
