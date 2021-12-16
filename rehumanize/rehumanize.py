@@ -1,4 +1,4 @@
-LT_TWENTY = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+LT_TWENTY = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
              "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 TENS = ["twenty", "thirty", "forty", "fifty",
         "sixty", "seventy", "eighty", "ninety"]
@@ -7,25 +7,22 @@ THOUSANDS = ["", "thousand", "million", "billion", "trillion", "quadrillion", "q
 
 
 def rehumanize(num: int) -> str:
-    digits: list[int] = [int(digit) for digit in str(num)]
     english: str = ""
+    if num == 0:
+        return "zero"
     # In this outer loop, we will iterate over three-digit chunks of the input.
     # We call each of these a "thousands_group"; its English prefix is
     # independent of how many thousands it represents and can therefore be
     # computed independently.
     thousands_groups: int = 0
-    while len(digits) > 0:
-        thousands_group: int = 0
-
-        tens: int = 0
-        while len(digits) > 0 and tens < 3:
-            thousands_group += ((10**tens) *
-                                digits.pop(len(digits) - 1))
-            tens += 1
+    remaining: int = num
+    while remaining > 0:
+        thousands_group = remaining % 1000
+        remaining = int((remaining - thousands_group) / 1000)
 
         thousands_group_english: str = ""
-        if thousands_group > 0 or len(digits) == 0:
-            if len(digits) > 0:
+        if thousands_group > 0 or remaining == 0:
+            if remaining > 0:
                 thousands_group_english = ", " if thousands_group > 100 else " and "
 
             thousands_group_english += process_three_digit_number(
