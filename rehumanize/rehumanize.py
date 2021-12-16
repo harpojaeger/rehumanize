@@ -32,7 +32,10 @@ def rehumanize(num: int) -> str:
             # Prepend a separator to the written form of this group _only_ if
             # another group will end up following it.
             if len(digits) > 0:
-                group_written_form = ", " if group_value > 100 else " and "
+                if group_value >= 100 or num_groups > 0:
+                    group_written_form = ", "
+                else:
+                    group_written_form = " and "
 
             group_written_form += process_three_digit_number(group_value)
 

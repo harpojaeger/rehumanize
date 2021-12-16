@@ -50,13 +50,17 @@ class RehumanizeTest(unittest.TestCase):
         (42420, "forty-two thousand, four hundred and twenty"),
         (169420, "one hundred and sixty-nine thousand, four hundred and twenty"),
         (5169420, "five million, one hundred and sixty-nine thousand, four hundred and twenty"),
-        (5000420, "five million, four hundred and twenty")
+        (5000420, "five million, four hundred and twenty"),
+        (50004735099, "fifty billion, four million, seven hundred and thirty-five thousand and ninety-nine"),
+        (50004735100, "fifty billion, four million, seven hundred and thirty-five thousand, one hundred")
     ])
     def test_gt_one_thousand(self, num, string):
         self.assertEqual(rehumanize(num), string)
 
     @parameterized.expand([
-        (69 * (10 ** 33), "sixty-nine decillion")
+        (69 * (10 ** 33), "sixty-nine decillion"),
+        (69*(10**63) + 420 * (10 ** 48),
+         "sixty-nine vigintillion, four hundred and twenty quindecillion")
     ])
     def test_very_large(self, num, string):
         self.assertEqual(rehumanize(num), string)
