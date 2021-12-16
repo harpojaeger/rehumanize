@@ -9,20 +9,30 @@ THOUSANDS = ["", "thousand", "million", "billion", "trillion", "quadrillion", "q
 def rehumanize(num: int) -> str:
     if num == 0:
         return "zero"
+    digits: list[int] = [int(digit) for digit in str(num)]
     english: str = ""
     # In this outer loop, we will iterate over three-digit chunks of the input.
     # We call each of these a "thousands_group"; its English prefix is
     # independent of how many thousands it represents and can therefore be
     # computed independently.
     thousands_groups: int = 0
-    remaining: int = num
-    while remaining > 0:
-        thousands_group = remaining % 1000
-        remaining = int((remaining - thousands_group) / 1000)
+    while len(digits) > 0:
+        thousands_group: int = 0
+
+        # This inner loop takes the place of a modulo 1000 operation. For very
+        # large numbers, modular arithmetic may be greater than O(n). It appears
+        # to also yield incorrect results in Python.
+        tens: int = 0
+        while len(digits) > 0 and tens < 3:
+            thousands_group += ((10**tens) *
+                                digits.pop(len(digits) - 1))
+            tens += 1
 
         thousands_group_english: str = ""
         if thousands_group > 0:
-            if remaining > 0:
+            # Prepend a separator to the written form of this thousands group
+            # _only_ if if another group will end up following it.
+            if len(digits) > 0:
                 thousands_group_english = ", " if thousands_group > 100 else " and "
 
             thousands_group_english += process_three_digit_number(

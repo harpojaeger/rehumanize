@@ -55,6 +55,12 @@ class RehumanizeTest(unittest.TestCase):
     def test_gt_one_thousand(self, num, string):
         self.assertEqual(rehumanize(num), string)
 
+    @parameterized.expand([
+        (69 * (10 ** 33), "sixty-nine decillion")
+    ])
+    def test_very_large(self, num, string):
+        self.assertEqual(rehumanize(num), string)
+
 
 if __name__ == '__main__':
     unittest.main()
