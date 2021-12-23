@@ -1,5 +1,3 @@
-import os
-import sys
 import unittest
 
 from parameterized import parameterized
@@ -41,9 +39,12 @@ TEST_CASES = [
 
 class RehumanizeTest(unittest.TestCase):
 
-    @parameterized.expand(TEST_CASES)
-    def test_main(self, num, string):
-        self.assertEqual(rehumanize(num), string)
+    # Generate test cases whose names end with the expected string value.
+    @parameterized.expand([
+        (expected_string, int, expected_string)
+        for (int, expected_string) in TEST_CASES])
+    def test(self, name, num, expected_string):
+        self.assertEqual(rehumanize(num), expected_string)
 
 
 if __name__ == '__main__':
