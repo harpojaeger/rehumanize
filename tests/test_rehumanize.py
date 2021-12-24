@@ -36,7 +36,7 @@ TEST_CASES = [
      "sixty-nine vigintillion, four hundred and twenty quindecillion"),
     (10**66, "one thousand vigintillion"),
     (10 ** 126, "one vigintillion vigintillion"),
-    (690 * 10 ** 186, "six hundred and ninety novemdecillion vigintillion vigintillion"),
+    (69 * 10 ** 187, "six hundred and ninety novemdecillion vigintillion vigintillion"),
     (12 + 690 * 10 ** 186,
      "six hundred and ninety novemdecillion vigintillion vigintillion and twelve"),
     (50 * 10 ** 189, "fifty vigintillion vigintillion vigintillion")
