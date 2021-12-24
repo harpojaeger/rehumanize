@@ -11,10 +11,10 @@ def rehumanize(num: int) -> str:
         return "zero"
     digits: list[int] = [int(digit) for digit in str(num)]
     written_form: str = ""
-    # In this outer loop, we will iterate over the input in three-digit groups.
-    # Each group's English prefix ("one hundred and fifty" in "one hundred and
-    # fifty million", for example) is independent of its place value; it is
-    #  therefore computed independently before having the name appended.
+    # In this outer loop, we iterate over the input in three-digit groups. Each
+    # group's English prefix ("one hundred and fifty" in "one hundred and fifty
+    # million", for example) is independent of its place value; it is therefore
+    # computed independently before having the "thousand, "million", etc. appended.
     num_groups: int = 0
     while len(digits) > 0:
         group_value: int = 0
@@ -50,32 +50,30 @@ def rehumanize(num: int) -> str:
 
 
 def three_digit_prefix(num: int) -> str:
-    two_digits: int = num % 100
-    written_form: int = process_two_digit_number(two_digits)
-    if num < 100:
-        return written_form
-
-    # 100 is written "one hundred", not "one hundred and zero"
-    if two_digits == 0:
-        written_form = ""
-    else:
-        written_form = f" and {written_form}"
-
-    hundreds_place: int = int((num - two_digits)/100)
-    written_form = f"{LT_TWENTY[hundreds_place]} hundred{written_form}"
-
-    return written_form
-
-
-def process_two_digit_number(num: int) -> str:
     if num < 20:
         return LT_TWENTY[num]
 
-    ones_place: int = num % 10
-    tens_place: int = int((num - ones_place)/10)
+    two_digits: int = num % 100
+    hundreds_place: int = int((num - two_digits)/100)
 
-    written_form: str = TENS[tens_place-2]
-    if ones_place > 0:
-        written_form += "-" + LT_TWENTY[ones_place]
+    # 100 is written "one hundred", not "one hundred and zero", so no need to
+    # bother writing out the rest of it.
+    if two_digits == 0:
+        return f"{LT_TWENTY[hundreds_place]} hundred"
 
-    return written_form
+    written_form: str
+
+    if two_digits < 20:
+        written_form = LT_TWENTY[two_digits]
+    else:
+        ones_place: int = two_digits % 10
+        tens_place: int = int((two_digits - ones_place)/10)
+
+        written_form = TENS[tens_place-2]
+        if ones_place > 0:
+            written_form += "-" + LT_TWENTY[ones_place]
+
+    if num < 100:
+        return written_form
+
+    return f"{LT_TWENTY[hundreds_place]} hundred and {written_form}"
