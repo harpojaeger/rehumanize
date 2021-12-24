@@ -1,3 +1,6 @@
+from typing import final
+
+
 LT_TWENTY = [
     "",
     "one",
@@ -78,8 +81,22 @@ def rehumanize(num: int) -> str:
 
             group_written_form += three_digit_prefix(group_value)
 
+            # If this group has a place value greater than 1000, append the
+            # written form of the thousands place.
             if num_groups > 0:
-                group_written_form += " " + THOUSANDS[num_groups - 1]
+                # Numbers greater than 10^66 - 1 require additional prefixes.
+                # One vigintillion = 10^63, so one thousand vigintillion =
+                # 10^66 and one million viginitillion = 10^69. This allows
+                # writing out infinitely large numbers.
+                final_thousands_index: int = (num_groups - 1) % len(THOUSANDS)
+                vigintillions: int = int(
+                    ((num_groups) - final_thousands_index) / len(THOUSANDS))
+
+                group_written_form += " " + THOUSANDS[final_thousands_index]
+
+                while vigintillions >= 1:
+                    group_written_form += " " + THOUSANDS[len(THOUSANDS) - 1]
+                    vigintillions -= 1
 
         written_form = group_written_form + written_form
 

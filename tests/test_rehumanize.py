@@ -33,7 +33,13 @@ TEST_CASES = [
     (50004735100, "fifty billion, four million, seven hundred and thirty-five thousand, one hundred"),
     (69 * (10 ** 33), "sixty-nine decillion"),
     (69 * (10**63) + 420 * (10 ** 48),
-     "sixty-nine vigintillion, four hundred and twenty quindecillion")
+     "sixty-nine vigintillion, four hundred and twenty quindecillion"),
+    (10**66, "one thousand vigintillion"),
+    (10 ** 126, "one vigintillion vigintillion"),
+    (690 * 10 ** 186, "six hundred and ninety novemdecillion vigintillion vigintillion"),
+    (12 + 690 * 10 ** 186,
+     "six hundred and ninety novemdecillion vigintillion vigintillion and twelve"),
+    (50 * 10 ** 189, "fifty vigintillion vigintillion vigintillion")
 ]
 
 
