@@ -21,9 +21,9 @@ LT_TWENTY = [
     "sixteen",
     "seventeen",
     "eighteen",
-    "nineteen"]
-TENS = ["twenty", "thirty", "forty", "fifty",
-        "sixty", "seventy", "eighty", "ninety"]
+    "nineteen",
+]
+TENS = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 THOUSANDS = [
     "thousand",
     "million",
@@ -45,7 +45,8 @@ THOUSANDS = [
     "septendecillion",
     "octodecillion",
     "novemdecillion",
-    "vigintillion"]
+    "vigintillion",
+]
 
 
 def rehumanize(num: int) -> str:
@@ -66,7 +67,7 @@ def rehumanize(num: int) -> str:
         # than O(n), and also appears to produce incorrect results.
         tens: int = 0
         while len(digits) > 0 and tens < 3:
-            group_value += ((10**tens) * digits.pop())
+            group_value += (10 ** tens) * digits.pop()
             tens += 1
 
         group_written_form: str = ""
@@ -88,11 +89,12 @@ def rehumanize(num: int) -> str:
                 # One vigintillion = 10^63, so one thousand vigintillion =
                 # 10^66 and one million viginitillion = 10^69. This allows
                 # writing out infinitely large numbers.
-                final_thousands_index: int = (num_groups - 1) % len(THOUSANDS)
+                thousands_index: int = (num_groups - 1) % len(THOUSANDS)
                 vigintillions: int = int(
-                    ((num_groups) - final_thousands_index) / len(THOUSANDS))
+                    (num_groups - thousands_index) / len(THOUSANDS)
+                )
 
-                group_written_form += " " + THOUSANDS[final_thousands_index]
+                group_written_form += " " + THOUSANDS[thousands_index]
 
                 while vigintillions >= 1:
                     group_written_form += " " + THOUSANDS[len(THOUSANDS) - 1]
