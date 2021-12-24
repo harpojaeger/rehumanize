@@ -50,6 +50,9 @@ def rehumanize(num: int) -> str:
 
 
 def three_digit_prefix(num: int) -> str:
+    if num < 20:
+        return LT_TWENTY[num]
+
     two_digits: int = num % 100
     written_form: int = process_two_digit_number(two_digits)
     if num < 100:
