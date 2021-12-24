@@ -54,31 +54,25 @@ def three_digit_prefix(num: int) -> str:
         return LT_TWENTY[num]
 
     two_digits: int = num % 100
-    written_form: int = process_two_digit_number(two_digits)
+    hundreds_place: int = int((num - two_digits)/100)
+
+    if two_digits < 20:
+        written_form = LT_TWENTY[two_digits]
+    else:
+        ones_place: int = two_digits % 10
+        tens_place: int = int((two_digits - ones_place)/10)
+
+        written_form: str = TENS[tens_place-2]
+        if ones_place > 0:
+            written_form += "-" + LT_TWENTY[ones_place]
+
     if num < 100:
         return written_form
 
     # 100 is written "one hundred", not "one hundred and zero"
     if two_digits == 0:
-        written_form = ""
-    else:
-        written_form = f" and {written_form}"
+        return f"{LT_TWENTY[hundreds_place]} hundred"
 
-    hundreds_place: int = int((num - two_digits)/100)
-    written_form = f"{LT_TWENTY[hundreds_place]} hundred{written_form}"
-
-    return written_form
-
-
-def process_two_digit_number(num: int) -> str:
-    if num < 20:
-        return LT_TWENTY[num]
-
-    ones_place: int = num % 10
-    tens_place: int = int((num - ones_place)/10)
-
-    written_form: str = TENS[tens_place-2]
-    if ones_place > 0:
-        written_form += "-" + LT_TWENTY[ones_place]
+    written_form = f"{LT_TWENTY[hundreds_place]} hundred and {written_form}"
 
     return written_form
