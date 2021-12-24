@@ -1,9 +1,48 @@
-LT_TWENTY = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-             "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+LT_TWENTY = [
+    "",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen"]
 TENS = ["twenty", "thirty", "forty", "fifty",
         "sixty", "seventy", "eighty", "ninety"]
-THOUSANDS = ["thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion",
-             "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "quattuordecillion", "quindecillion", "sexdecillion", "septendecillion", "octodecillion", "novemdecillion", "vigintillion"]
+THOUSANDS = [
+    "thousand",
+    "million",
+    "billion",
+    "trillion",
+    "quadrillion",
+    "quintillion",
+    "sextillion",
+    "septillion",
+    "octillion",
+    "nonillion",
+    "decillion",
+    "undecillion",
+    "duodecillion",
+    "tredecillion",
+    "quattuordecillion",
+    "quindecillion",
+    "sexdecillion",
+    "septendecillion",
+    "octodecillion",
+    "novemdecillion",
+    "vigintillion"]
 
 
 def rehumanize(num: int) -> str:
@@ -14,7 +53,7 @@ def rehumanize(num: int) -> str:
     # In this outer loop, we iterate over the input in three-digit groups. Each
     # group's English prefix ("one hundred and fifty" in "one hundred and fifty
     # million", for example) is independent of its place value; it is therefore
-    # computed independently before having the "thousand, "million", etc. appended.
+    # computed independently before having the "million" appended.
     num_groups: int = 0
     while len(digits) > 0:
         group_value: int = 0
@@ -40,7 +79,7 @@ def rehumanize(num: int) -> str:
             group_written_form += three_digit_prefix(group_value)
 
             if num_groups > 0:
-                group_written_form += " " + THOUSANDS[num_groups-1]
+                group_written_form += " " + THOUSANDS[num_groups - 1]
 
         written_form = group_written_form + written_form
 
@@ -54,7 +93,7 @@ def three_digit_prefix(num: int) -> str:
         return LT_TWENTY[num]
 
     two_digits: int = num % 100
-    hundreds_place: int = int((num - two_digits)/100)
+    hundreds_place: int = int((num - two_digits) / 100)
 
     # 100 is written "one hundred", not "one hundred and zero", so no need to
     # bother writing out the rest of it.
@@ -67,9 +106,9 @@ def three_digit_prefix(num: int) -> str:
         written_form = LT_TWENTY[two_digits]
     else:
         ones_place: int = two_digits % 10
-        tens_place: int = int((two_digits - ones_place)/10)
+        tens_place: int = int((two_digits - ones_place) / 10)
 
-        written_form = TENS[tens_place-2]
+        written_form = TENS[tens_place - 2]
         if ones_place > 0:
             written_form += "-" + LT_TWENTY[ones_place]
 

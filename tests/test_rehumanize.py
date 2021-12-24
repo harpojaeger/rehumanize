@@ -32,7 +32,7 @@ TEST_CASES = [
     (50004735099, "fifty billion, four million, seven hundred and thirty-five thousand and ninety-nine"),
     (50004735100, "fifty billion, four million, seven hundred and thirty-five thousand, one hundred"),
     (69 * (10 ** 33), "sixty-nine decillion"),
-    (69*(10**63) + 420 * (10 ** 48),
+    (69 * (10**63) + 420 * (10 ** 48),
      "sixty-nine vigintillion, four hundred and twenty quindecillion")
 ]
 
